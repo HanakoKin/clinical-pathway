@@ -11,7 +11,7 @@
             @include('script.alert.error')
         @endif
 
-        @include('pages.modal.instruction')
+        @include('modal.instruction')
 
         <div class="row">
 

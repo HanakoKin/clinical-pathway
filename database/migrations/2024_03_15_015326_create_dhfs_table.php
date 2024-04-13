@@ -203,6 +203,7 @@ return new class extends Migration
             $table->text('catatan_rencanaResume')->nullable();
             $table->text('rencana_penjelasan')->nullable();
             $table->text('rencana_surat')->nullable();
+
             $table->string('tanggal_laporan')->nullable();
 
             /* TTD DOKTER */

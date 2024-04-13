@@ -11,6 +11,8 @@
             @include('script.alert.error')
         @endif
 
+        @include('modal.instruction')
+
         <div class="row">
 
             <div class="col-xl-12 col-12">
@@ -335,6 +337,7 @@
         </div>
     </section>
 
+    @include('script.modal.instruction')
     @include('script.signature.addSignature')
     @include('script.api.getData')
 @endsection
