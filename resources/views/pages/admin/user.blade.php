@@ -4,11 +4,11 @@
     <section class="content pt-0">
 
         @if (session()->has('success'))
-            @include('script.success')
+            @include('script.alert.success')
         @endif
 
         @if (session()->has('error'))
-            @include('script.error')
+            @include('script.alert.error')
         @endif
 
 
@@ -30,7 +30,7 @@
                     <div class="box-header py-4">
                         <h4 class="box-title">Jumlah User : {{ $totals }} </h4>
                         <div class="box-controls pull-right d-md-flex d-none">
-                            <a href="{{ route('addUserForm') }}" class="btn btn-info btn-sm mb-2 text-decoration-none">
+                            <a href="{{ route('user.add') }}" class="btn btn-info btn-sm mb-2 text-decoration-none">
                                 <i class="fal fa-plus-circle"></i> Add
                             </a>
                         </div>
@@ -42,10 +42,9 @@
                                 <thead>
                                     <tr class="text-center">
                                         <th scope="col">Foto</th>
-                                        <th scope="col">Nama</th>
-                                        <th scope="col">Username</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
                                         <th scope="col">Role</th>
-                                        <th scope="col">Unit</th>
                                         <th scope="col">Aksi</th>
                                     </tr>
                                 </thead>
@@ -54,10 +53,9 @@
                                         <tr class="text-center">
                                             <td><img src="https://source.unsplash.com/50x50?people" alt="User Avatar"
                                                     class="img-fluid rounded-circle mb-3" style="width: 50px;"></td>
-                                            <td>{{ $user->nama }}</td>
-                                            <td>{{ $user->username }}</td>
-                                            <td>{{ $user->role }}</td>
-                                            <td>{{ $user->unit }}</td>
+                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $user->email }}</td>
+                                            <td>{{ ucFirst(trans($user->role)) }}</td>
                                             <td>
 
                                                 <a class="btn btn-success btn-sm me-2 mb-2 text-decoration-none"
@@ -67,15 +65,26 @@
                                                 </a>
 
                                                 <a class="btn btn-warning btn-sm me-2 mb-2 text-decoration-none"
-                                                    href="{{ url('/admin/user/edit', $user->id) }}"><i
-                                                        class="fal fa-pen"></i>
-                                                    Edit
+                                                    data-bs-toggle="modal"
+                                                    onclick="editUserModal({{ json_encode($user) }})">
+                                                    <i class="fal fa-pen"></i> Edit
                                                 </a>
 
-                                                <a href="{{ route('deleteUser', ['id' => $user->id]) }}" data-target="user"
-                                                    class="btn btn-danger btn-sm me-2 mb-2 text-decoration-none deleteBtn"><i
-                                                        class="fal fa-trash-alt"></i> Delete
-                                                </a>
+                                                <form id="deleteDataForm_{{ $user->id }}" class="d-inline-block"
+                                                    action="{{ route('user.delete', ['id' => $user->id]) }}" method="POST"
+                                                    data-target="{{ $user->name }}'s data">
+                                                    @csrf
+                                                    @method('DELETE')
+
+                                                    <input type="hidden" name="name" value="{{ $user->name }}">
+                                                    <input type="hidden" name="role" value="{{ $user->role }}">
+
+                                                    <button type="submit"
+                                                        class="btn btn-danger btn-sm me-2 mb-2 text-decoration-none deleteBtn"
+                                                        data-user-id="{{ $user->id }}">
+                                                        <i class="fal fa-trash-alt"></i> Delete data
+                                                    </button>
+                                                </form>
 
                                             </td>
                                         </tr>
@@ -90,12 +99,15 @@
 
         {{-- Modal Show Data --}}
         @include('modal.userShow')
+        @include('modal.userEdit')
 
         {{-- JS for Modal --}}
-        @include('script.userShow')
+        @include('script.modal.userShow')
+        @include('script.modal.userEdit')
 
         {{-- JS for Delete --}}
-        @include('script.confirm-delete')
+        {{-- @include('script.confirm.confirm-delete') --}}
+        @include('script.confirm.delete')
 
     </section>
 @endsection

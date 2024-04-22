@@ -4,11 +4,11 @@
     <section class="content">
 
         @if (session()->has('success'))
-            @include('script.success')
+            @include('script.alert.success')
         @endif
 
         @if (session()->has('error'))
-            @include('script.error')
+            @include('script.alert.error')
         @endif
 
         <div class="row">
@@ -21,14 +21,11 @@
                         <div class="flex-grow-1 p-30 flex-grow-1 bg-img dask-bg bg-none-md">
                             <div class="row">
                                 <div class="col-12 col-lg-8">
-                                    <h2>Welcome back, <strong>Haki !</strong></h2>
+                                    <h2>Welcome back, <strong>{{ Auth::user()->name }}</strong></h2>
 
                                     <p class="text-dark my-10 fs-16">
                                         <span id="greetingMessage"></span>, anda sedang login sebagai
-                                        <span class="text-bold">Admin </span>
-                                    </p>
-                                    <p class="text-dark my-10 fs-16">
-                                        Total Kasus : 10 laporan</strong>
+                                        <span class="text-bold">{{ Auth::user()->role }} </span>
                                     </p>
                                 </div>
                                 <div class="col-12 col-lg-4 py-2 px-4"><img

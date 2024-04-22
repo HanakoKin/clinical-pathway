@@ -124,16 +124,22 @@
 
                             <div class="col-12">
                                 <div class="row">
-                                    <div class="col-lg-6 col-12 text-center">
+                                    <div class="col-lg-4 col-12 text-center">
                                         <p>Dokter Penanggung Jawab Pelayanan</p>
                                         <img src="{{ $data->ttd_dokter }}" alt="" width="200">
                                         <p>( {{ $data->nama_dokter }} )</p>
                                     </div>
 
-                                    <div class="col-lg-6 col-12 text-center">
+                                    <div class="col-lg-4 col-12 text-center">
                                         <p>Perawat Penanggung Jawab</p>
                                         <img src="{{ $data->ttd_perawat }}" alt="" width="200">
                                         <p>( {{ $data->nama_perawat }} )</p>
+                                    </div>
+
+                                    <div class="col-lg-4 col-12 text-center">
+                                        <p>Pelaksana Verifikasi</p>
+                                        <img src="{{ $data->ttd_pelaksana }}" alt="" width="200">
+                                        <p>( {{ $data->nama_pelaksana }} )</p>
                                     </div>
                                 </div>
                             </div>

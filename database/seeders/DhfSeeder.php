@@ -15,6 +15,7 @@ class DhfSeeder extends Seeder
     {
         DB::table('dhfs')->insert([
             [
+                'table' => 'DHF',
                 'noReg' => 'RG03299949',
                 'nama' => 'FAJAR HAQQY ASHBAHANIE',
                 'jenis_kelamin' => 'Laki-laki',

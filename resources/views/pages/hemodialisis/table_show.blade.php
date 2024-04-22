@@ -2,10 +2,14 @@
     <table id="" class="table table-bordered display margin-top-10">
         <thead class="text-center">
             <tr>
-                <th rowspan="5">KEGIATAN</th>
-                <th rowspan="5" class="min-w-180">URAIAN KEGIATAN</th>
-                <th colspan="5" class="min-w-250">HARI PENYAKIT</th>
-                <th rowspan="5">KETERANGAN</th>
+                <th rowspan="5" class="min-w-100">KEGIATAN</th>
+                <th rowspan="5"
+                    class="@if ($cmd === 'edit') min-w-50 @elseif ($cmd === 'show') min-w-180 @endif">
+                    URAIAN KEGIATAN</th>
+                <th colspan="5">HARI PENYAKIT </th>
+                <th rowspan="5"
+                    class="@if ($cmd === 'edit') min-w-250 @elseif ($cmd === 'show') min-w-100 @endif">
+                    KETERANGAN</th>
             </tr>
             <tr>
                 @for ($i = 1; $i <= 5; $i++)
@@ -55,14 +59,16 @@
                 <td>Dokter IGD</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->asesment_igd))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="asesDokIgd{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="asesment_igd[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="asesDokIgd{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="asesDokIgd{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="asesment_igd[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -70,20 +76,28 @@
                         </td>
                     @endif
                 @endfor
-                <td>Pasien masuk melalui IGD</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_asesDokIgd)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanAsesDokIgd" name="catatan_asesDokIgd">{{ $data->catatan_asesDokIgd }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>Dokter Spesialis</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->asesment_spesialis))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="asesDokSpe{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="asesment_spesialis[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="asesDokSpe{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="asesDokSpe{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="asesment_spesialis[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -91,7 +105,13 @@
                         </td>
                     @endif
                 @endfor
-                <td>Pasien masuk melalui RJ</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_asesDokSpe)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanAsesDokSpe" name="catatan_asesDokSpe">{{ $data->catatan_asesDokSpe }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>b. ASESMEN AWAL KEPERAWATAN</td>
@@ -101,14 +121,16 @@
                 </td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->asesment_primer))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="asesPerPri{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="asesment_primer[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="asesPerPri{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="asesPerPri{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="asesment_primer[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -117,8 +139,11 @@
                     @endif
                 @endfor
                 <td>
-                    Dilanjutkan dengan asesmen bio, psiko, sosial, spiritual,
-                    dan budaya
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_asesPer)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanAsesPer" name="catatan_asesPer">{{ $data->catatan_asesPer }}</textarea>
+                    @endif
                 </td>
             </tr>
             <tr>
@@ -126,14 +151,16 @@
                 <td>Darah Lengkap</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->lab_darah))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="labDarah{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="lab_darah[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="labDarah{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="labDarah{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="lab_darah[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -141,20 +168,28 @@
                         </td>
                     @endif
                 @endfor
-                <td>Hemoglobin tiap 1 bulan</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_labDarah)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanLabDarah" name="catatan_labDarah">{{ $data->catatan_labDarah }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>Elektrolit darah (Natrium, Kalium, Klorida, Kalsium, Fosfor)</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->lab_elektrolit))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="labElektrolit{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="lab_elektrolit[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="labElektrolit{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="labElektrolit{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="lab_elektrolit[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -162,20 +197,28 @@
                         </td>
                     @endif
                 @endfor
-                <td>Pertama kali HD dan setiap 3 bulan</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_labElektrolit)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanLabElektrolit" name="catatan_labElektrolit">{{ $data->catatan_labElektrolit }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>Ureum, Creatinin, dan eGFR</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->lab_ureum))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="labUreum{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="lab_ureum[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="labUreum{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="labUreum{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="lab_ureum[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -183,20 +226,28 @@
                         </td>
                     @endif
                 @endfor
-                <td></td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_labUreum)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanLabUreum" name="catatan_labUreum">{{ $data->catatan_labUreum }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>HbsAg, Anti HCV, HIV</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->lab_hcv))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="labHCV{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="lab_hcv[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="labHCV{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="labHCV{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="lab_hcv[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -204,20 +255,28 @@
                         </td>
                     @endif
                 @endfor
-                <td>Pertama kali HD dan dalam 6 bulan</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_labHCV)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanLabHCV" name="catatan_labHCV">{{ $data->catatan_labHCV }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>PT, APTT</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->lab_pt))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="labPT{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="lab_pt[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="labPT{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="labPT{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="lab_pt[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -225,20 +284,28 @@
                         </td>
                     @endif
                 @endfor
-                <td></td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_labPT)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanLabPT" name="catatan_labPT">{{ $data->catatan_labPT }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>Magnesium (Mg)</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->lab_magnesium))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="labMagnesium{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="lab_magnesium[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="labMagnesium{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="labMagnesium{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="lab_magnesium[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -246,20 +313,28 @@
                         </td>
                     @endif
                 @endfor
-                <td>Pemeriksaan khusus pada pasien aritmia, diperiksa setiap tahun</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_labMagnesium)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanLabMagnesium" name="catatan_labMagnesium">{{ $data->catatan_labMagnesium }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>Serum Iron, TIBC, Ferritin</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->lab_tibc))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="labTIBC{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="lab_tibc[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="labTIBC{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="labTIBC{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="lab_tibc[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -267,20 +342,28 @@
                         </td>
                     @endif
                 @endfor
-                <td>Peserta yang menjalani HD rutin dengan anemia renal</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_labTIBC)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanLabTIBC" name="catatan_labTIBC">{{ $data->catatan_labTIBC }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>PTH</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->lab_pth))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="labPTH{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="lab_pth[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="labPTH{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="labPTH{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="lab_pth[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -288,21 +371,29 @@
                         </td>
                     @endif
                 @endfor
-                <td>Setiap tahun</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_labPTH)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanLabPTH" name="catatan_labPTH">{{ $data->catatan_labPTH }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>3. RADIOLOGI/IMAGING</td>
                 <td>Foto toraks PA</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->radio_foto))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="radFoto{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="radio_foto[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="radFoto{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="radFoto{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="radio_foto[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -310,21 +401,29 @@
                         </td>
                     @endif
                 @endfor
-                <td>Pasien Pertama kali HD</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_radFoto)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanRadFoto" name="catatan_radFoto">{{ $data->catatan_radFoto }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td rowspan="2">4. VARIAN</td>
                 <td>EKG / Echocardiogram</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->var_ekg))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="varEKG{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="var_ekg[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="varEKG{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="varEKG{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="var_ekg[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -332,20 +431,28 @@
                         </td>
                     @endif
                 @endfor
-                <td>Pasien Pertama kali HD dan setiap 6 bulan</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_varEKG)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanVarEKG" name="catatan_varEKG">{{ $data->catatan_varEKG }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>Echocardiogram</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->var_echo))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="varEcho{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="var_echo[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="varEcho{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="varEcho{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="var_echo[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -353,21 +460,29 @@
                         </td>
                     @endif
                 @endfor
-                <td>Setiap 3 tahun atau setiap tahun bila ada heart failure</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_varEcho)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanVarEcho" name="catatan_varEcho">{{ $data->catatan_varEcho }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>5. KONSULTASI</td>
                 <td></td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->konsultasi))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="konsul{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="konsultasi[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="konsul{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="konsul{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="konsultasi[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -375,7 +490,13 @@
                         </td>
                     @endif
                 @endfor
-                <td>Varian</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_konsul)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanKonsul" name="catatan_konsul">{{ $data->catatan_konsul }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>6. ASESMEN LANJUTAN</td>
@@ -389,14 +510,16 @@
                 <td>Dokter DPJP</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->ases_DPJP))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="asesDPJP{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="ases_DPJP[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="asesDPJP{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="asesDPJP{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="ases_DPJP[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -404,20 +527,28 @@
                         </td>
                     @endif
                 @endfor
-                <td>Visit harian/Follow up</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_asesDPJP)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanAsesDPJP" name="catatan_asesDPJP">{{ $data->catatan_asesDPJP }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>Dokter non DPJP/dokter Ruangan</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->ases_nonDPJP))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="asesNonDPJP{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="ases_nonDPJP[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="asesNonDPJP{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="asesNonDPJP{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="ases_nonDPJP[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -425,21 +556,29 @@
                         </td>
                     @endif
                 @endfor
-                <td>Atas Indikasi/Emergency</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_asesNonDPJP)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanAsesNonDPJP" name="catatan_asesNonDPJP">{{ $data->catatan_asesNonDPJP }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>b. ASESMEN KEPERAWATAN</td>
                 <td>Perawat Penanggung Jawab</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->ases_PPJ))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="asesPPJ{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="ases_PPJ[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="asesPPJ{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="asesPPJ{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="ases_PPJ[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -447,21 +586,29 @@
                         </td>
                     @endif
                 @endfor
-                <td>Dilakukan dalam 3 shift</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_asesPPJ)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanAsesPPJ" name="catatan_asesPPJ">{{ $data->catatan_asesPPJ }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>c. ASESMEN GIZI</td>
                 <td>Skrining Gizi</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->ases_gizi))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 2) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="asesGizi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="ases_gizi[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="asesGizi{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 2) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="asesGizi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="ases_gizi[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -470,10 +617,11 @@
                     @endif
                 @endfor
                 <td>
-                    Lihat risiko malnutrisi melalui skrining gizi dan mengkaji
-                    data antropometri, biokimia, fisik/klinis, riwayat makan
-                    termasuk alergi makanan serta riwayat personal. Asesmen
-                    dilakukan dalam waktu 48 jam
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_asesGizi)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanAsesGizi" name="catatan_asesGizi">{{ $data->catatan_asesGizi }}</textarea>
+                    @endif
                 </td>
             </tr>
             <tr>
@@ -481,14 +629,16 @@
                 <td>Telaah Resep</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->ases_resep))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="asesResep{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="ases_resep[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="asesResep{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="asesResep{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="ases_resep[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -497,22 +647,27 @@
                     @endif
                 @endfor
                 <td rowspan="2">
-                    Dilanjutkan dengan intervensi farmasi yang sesuai hasil
-                    Telaah dan Rekonsiliasi obat
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_asesResep)) !!}
+                    @else
+                        <textarea rows="5" class="form-control" id="catatanAsesResep" name="catatan_asesResep">{{ $data->catatan_asesResep }}</textarea>
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td>Rekonsiliasi Obat</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->ases_obat))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @elseif ($cmd === 'edit' && $i !== 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="asesObat{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="ases_obat[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="asesObat{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @elseif ($cmd === 'edit' && $i !== 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="asesObat{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="ases_obat[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -533,14 +688,16 @@
                 <td>AKI dd/ Akut on CKD</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->diagnosa_aki))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagAKI{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_aki[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="diagAKI{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagAKI{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_aki[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -548,20 +705,28 @@
                         </td>
                     @endif
                 @endfor
-                <td>Kode ICD-10: N17.9</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_diagAKI)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanDiagAKI" name="catatan_diagAKI">{{ $data->catatan_diagAKI }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>End Stage Renal Disease</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->diagnosa_end))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagEnd{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_end[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="diagEnd{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagEnd{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_end[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -569,21 +734,29 @@
                         </td>
                     @endif
                 @endfor
-                <td>Kode ICD-10: N18.6</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_diagEnd)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanDiagEnd" name="catatan_diagEnd">{{ $data->catatan_diagEnd }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td rowspan="10">b. DIAGNOSIS KEPERAWATAN</td>
                 <td>a. Kode : 0005 Pola Napas Tidak Efektif</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->diagnosa_napas))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagNapas{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_napas[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="diagNapas{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagNapas{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_napas[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -592,22 +765,27 @@
                     @endif
                 @endfor
                 <td rowspan="10">
-                    Masalah keperawatan yang dijumpai setiap hari. Dibuat oleh
-                    perawat penanggung jawab
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_diagNapas)) !!}
+                    @else
+                        <textarea rows="22" class="form-control" id="catatanDiagNapas" name="catatan_diagNapas">{{ $data->catatan_diagNapas }}</textarea>
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td>b. Kode : 0016 Risiko Perfusi Renal Tidak Efektif</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->diagnosa_perfusi))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagPerfusi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_perfusi[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="diagPerfusi{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagPerfusi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_perfusi[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -620,14 +798,16 @@
                 <td>c. Kode : 0022 Hipervolemia</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->diagnosa_hipervolemia))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagHipervolemia{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_hipervolemia[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="diagHipervolemia{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagHipervolemia{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_hipervolemia[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -640,14 +820,16 @@
                 <td>d. Kode : 0019 Defisit Nutrisi</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->diagnosa_nutrisi))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagNutrisi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_nutrisi[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="diagNutrisi{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagNutrisi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_nutrisi[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -660,14 +842,16 @@
                 <td>e. Kode : 0076 Nausea</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->diagnosa_nausea))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagNausea{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_nausea[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="diagNausea{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagNausea{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_nausea[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -680,14 +864,16 @@
                 <td>f. Kode : 0056 Intoleransi Aktivitas</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->diagnosa_aktivitas))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagAktivitas{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_aktivitas[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="diagAktivitas{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagAktivitas{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_aktivitas[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -700,14 +886,16 @@
                 <td>g. Kode : 0129 Gangguan Integritas Kulit / Jaringan</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->diagnosa_kulit))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagKulit{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_kulit[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="diagKulit{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagKulit{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_kulit[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -720,14 +908,16 @@
                 <td>h. Kode : 0008 Penurunan Curah Jantung</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->diagnosa_jantung))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagJantung{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_jantung[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="diagJantung{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagJantung{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_jantung[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -740,14 +930,16 @@
                 <td>i. Kode : 0009 Perfusi Perifer Tidak Efektif</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->diagnosa_perifer))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagPerifer{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_perifer[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="diagPerifer{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagPerifer{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_perifer[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -760,14 +952,16 @@
                 <td>j. Kode : 0142 Risiko Infeksi</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->diagnosa_infeksi))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagInfeksi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_infeksi[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="diagInfeksi{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagInfeksi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_infeksi[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -781,14 +975,16 @@
                 <td>Restriksi Cairan 600cc / 24 jam</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->diagnosa_cairan))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 2) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagGiziCairan{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_cairan[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="diagGiziCairan{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 2) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagGiziCairan{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_cairan[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -797,22 +993,27 @@
                     @endif
                 @endfor
                 <td rowspan="3">
-                    Sesuai dengan data asesmen, kemungkinan saja ada diagnosis
-                    lain atau diagnosis berubah selama perawatan
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_diagGiziCairan)) !!}
+                    @else
+                        <textarea rows="6" class="form-control" id="catatanDiagGiziCairan" name="catatan_diagGiziCairan">{{ $data->catatan_diagGiziCairan }}</textarea>
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td>Diet Rendah Garam (Natrium &lt; 2gr / hari)</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->diagnosa_garam))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 2) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagGiziGaram{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_garam[{{ $i }}]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="diagGiziGaram{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 2) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagGiziGaram{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_garam[{{ $i }}]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -825,14 +1026,16 @@
                 <td>Diet Protein (1.2 gr / kg BB / hari)</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->diagnosa_protein))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 2) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagGiziProtein{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_protein[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="diagGiziProtein{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 2) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="diagGiziProtein{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="diagnosa_protein[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -846,14 +1049,16 @@
                 <td>Edukasi kondisi pasien</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->displan_edukasi))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 2) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="disPlanEdukasi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="displan_edukasi[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="disPlanEdukasi{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 2) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="disPlanEdukasi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="displan_edukasi[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -861,20 +1066,28 @@
                         </td>
                     @endif
                 @endfor
-                <td rowspan="4"></td>
+                <td rowspan="4">
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_disPlanEdukasi)) !!}
+                    @else
+                        <textarea rows="8" class="form-control" id="catatanDisPlanEdukasi" name="catatan_disPlanEdukasi">{{ $data->catatan_disPlanEdukasi }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>Edukasi rencana dialysis (Resiko dan komplikasi)</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->displan_rencana))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="disPlanRencana{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="displan_rencana[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="disPlanRencana{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="disPlanRencana{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="displan_rencana[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -887,14 +1100,16 @@
                 <td>Edukasi obat-obatan rutin</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->displan_obat))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="disPlanObat{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="displan_obat[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="disPlanObat{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="disPlanObat{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="displan_obat[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -907,14 +1122,16 @@
                 <td>Edukasi rencana tatalaksana lanjutan dan kontrol</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->displan_kontrol))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="disPlanKontrol{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="displan_kontrol[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="disPlanKontrol{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="disPlanKontrol{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="displan_kontrol[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -935,14 +1152,16 @@
                 <td>Penjelasan Diagnosis</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->edukasi_diagnosis))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="emedDiag{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="edukasi_diagnosis[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="emedDiag{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="emedDiag{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="edukasi_diagnosis[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -951,22 +1170,27 @@
                     @endif
                 @endfor
                 <td rowspan="2">
-                    Oleh semua pemberi asuhan berdasarkan kebutuhan dan juga
-                    berdasarkan Discharge Planning
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_emedDiag)) !!}
+                    @else
+                        <textarea rows="5" class="form-control" id="catatanEmedDiag" name="catatan_emedDiag">{{ $data->catatan_emedDiag }}</textarea>
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td>Rencana terapi</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->edukasi_terapi))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="emedTerapi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="edukasi_terapi[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="emedTerapi{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="emedTerapi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="edukasi_terapi[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -979,14 +1203,16 @@
                 <td>Informed Consent</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->edukasi_consent))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="emedConsent{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="edukasi_consent[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="emedConsent{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="emedConsent{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="edukasi_consent[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -994,7 +1220,13 @@
                         </td>
                     @endif
                 @endfor
-                <td>Informed consent HD diulang tiap 6 bulan</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_emedConsent)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanEmedConsent" name="catatan_emedConsent">{{ $data->catatan_emedConsent }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>b. EDUKASI DAN KONSELING GIZI</td>
@@ -1004,14 +1236,16 @@
                 </td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->edukasi_gizi))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 2) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="egiz{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="edukasi_gizi[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="egiz{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 2) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="egiz{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="edukasi_gizi[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1020,8 +1254,11 @@
                     @endif
                 @endfor
                 <td>
-                    Edukasi gizi dilakukan saat awal masuk dan atau pada hari ke
-                    1/hari ke 2
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_egiz)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanEgiz" name="catatan_egiz">{{ $data->catatan_egiz }}</textarea>
+                    @endif
                 </td>
             </tr>
             <tr>
@@ -1029,14 +1266,16 @@
                 <td>a. Diet pada pasien gagal ginjal</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->edukasi_ginjal))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="ekepGinjal{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="edukasi_ginjal[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="ekepGinjal{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="ekepGinjal{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="edukasi_ginjal[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1044,21 +1283,28 @@
                         </td>
                     @endif
                 @endfor
-                <td rowspan="5">Pengisian formulir informasi dan edukasi terintegrasi oleh pasien dan atau keluarga
+                <td rowspan="5">
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_ekepGinjal)) !!}
+                    @else
+                        <textarea rows="10" class="form-control" id="catatanEkepGinjal" name="catatan_ekepGinjal">{{ $data->catatan_ekepGinjal }}</textarea>
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td>b. Penjelasan kelebihan dan kekurangan hemodialisa</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->edukasi_hemodialisa))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="ekepHemodialisa{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="edukasi_hemodialisa[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="ekepHemodialisa{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="ekepHemodialisa{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="edukasi_hemodialisa[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1071,14 +1317,16 @@
                 <td>c. Perawatan catheter doblelumen (CDL) di rumah</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->edukasi_cdl))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="ekepCDL{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="edukasi_cdl[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="ekepCDL{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="ekepCDL{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="edukasi_cdl[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1091,14 +1339,16 @@
                 <td>d. Kebutuhan intake dan output cairan</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->edukasi_output))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="ekepOutput{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="edukasi_output[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="ekepOutput{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="ekepOutput{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="edukasi_output[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1111,14 +1361,16 @@
                 <td>e. Pentingnya dukungan keluarga</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->edukasi_dukungan))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="ekepDukungan{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="edukasi_dukungan[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="ekepDukungan{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="ekepDukungan{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="edukasi_dukungan[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1132,14 +1384,16 @@
                 <td>Informasi Obat</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->edukasi_info))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && ($i === 0 || $i === 4)) style="background-color: #FEA8B9" @elseif ($cmd === 'edit') style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="efarmInf{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="edukasi_info[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="efarmInf{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && ($i === 0 || $i === 4)) style="background-color: #FEA8B9" @elseif ($cmd === 'edit') style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="efarmInf{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="edukasi_info[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1148,21 +1402,27 @@
                     @endif
                 @endfor
                 <td rowspan="2">
-                    Meningkatkan kepatuhan pasien meminum/menggunakan obat
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_efarmInf)) !!}
+                    @else
+                        <textarea rows="5" class="form-control" id="catatanEfarmInf" name="catatan_efarmInf">{{ $data->catatan_efarmInf }}</textarea>
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td>Konseling Obat</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->edukasi_konseling))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && ($i === 0 || $i === 4)) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="efarmKons{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="edukasi_konseling[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="efarmKons{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && ($i === 0 || $i === 4)) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="efarmKons{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="edukasi_konseling[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1176,14 +1436,16 @@
                 <td>Lembar Edukasi Terintegrasi</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->lembar_edukasi))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="lemEdTer{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="lembar_edukasi[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="lemEdTer{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="lemEdTer{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="lembar_edukasi[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1191,7 +1453,13 @@
                         </td>
                     @endif
                 @endfor
-                <td>DTT keluarga/pasien</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_lemEdTer)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanLemEdTer" name="catatan_lemEdTer">{{ $data->catatan_lemEdTer }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>10. TERAPI/MEDIKAMENTOSA</td>
@@ -1205,14 +1473,16 @@
                 <td>Cartheter double lumen jugularis dextra temporer (Akses Vena HD)</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->tindakan_cartheter))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="tindakanCartheter{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="tindakan_cartheter[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="tindakanCartheter{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="tindakanCartheter{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="tindakan_cartheter[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1220,20 +1490,28 @@
                         </td>
                     @endif
                 @endfor
-                <td></td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_tindakanCartheter)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanTindakanCartheter" name="catatan_tindakanCartheter">{{ $data->catatan_tindakanCartheter }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>O2 Nasal Canul 4L / Menit</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->tindakan_nasal))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="tindakanNasal{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="tindakan_nasal[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="tindakanNasal{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="tindakanNasal{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="tindakan_nasal[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1241,21 +1519,29 @@
                         </td>
                     @endif
                 @endfor
-                <td></td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_tindakanNasal)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanTindakanNasal" name="catatan_tindakanNasal">{{ $data->catatan_tindakanNasal }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>b. CAIRAN INFUS</td>
                 <td>Kristaloid : NaCol 0,9% / D5%</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->injeksi_kristaloid))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="infusKristaloid{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="injeksi_kristaloid[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="infusKristaloid{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="infusKristaloid{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="injeksi_kristaloid[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1263,43 +1549,37 @@
                         </td>
                     @endif
                 @endfor
-                <td>Optional</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_infusKristaloid)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanInfusKristaloid" name="catatan_infusKristaloid">{{ $data->catatan_infusKristaloid }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td rowspan="4">c. INJEKSI</td>
                 <td>Antikoagulan</td>
-                @for ($i = 0; $i < 5; $i++)
-                    @if (in_array($i + 1, $data->inject_antikoagulan))
-                        <td class="text-center p-1">
-                            <input type="checkbox" id="injectAntikoagulan{{ $i }}" value="1"
-                                @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="inject_antikoagulan[ {{ $i }} ]" @endif
-                                checked>
-                            <label class="p-1 me-2 mt-2" for="injectAntikoagulan{{ $i }}"></label>
-                        </td>
-                    @else
-                        <td class="text-center p-1">
-                            <input type="checkbox" id="injectAntikoagulan{{ $i }}" value="1"
-                                @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="inject_antikoagulan[ {{ $i }} ]" @endif>
-                            <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
-                                for="injectAntikoagulan{{ $i }}"></label>
-                        </td>
-                    @endif
+                @for ($i = 0; $i < 6; $i++)
+                    <td>
+                    </td>
                 @endfor
-                <td></td>
             </tr>
             <tr>
                 <td>Diberikan dosis awal secara bolus 2000 IU, tunggu 3-5 menit untuk membiarkan heparin menyebar merata
                     kepermukaan dialyzer</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->inject_bolus))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="injectBolus{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="inject_bolus[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="injectBolus{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="injectBolus{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="inject_bolus[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1307,20 +1587,28 @@
                         </td>
                     @endif
                 @endfor
-                <td>Pada pasien tanpa resiko perdarahan</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_injectBolus)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanInjectBolus" name="catatan_injectBolus">{{ $data->catatan_injectBolus }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>Heparin kontinyu dengan kecepatan 1000 IU/ jam</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->inject_heparin))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="injectHeparin{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="inject_heparin[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="injectHeparin{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="injectHeparin{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="inject_heparin[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1328,20 +1616,28 @@
                         </td>
                     @endif
                 @endfor
-                <td></td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_injectHeparin)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanInjectHeparin" name="catatan_injectHeparin">{{ $data->catatan_injectHeparin }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>Eritropoetin</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->inject_eritropoetin))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="injectEritropoetin{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="inject_eritropoetin[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="injectEritropoetin{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 0) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="injectEritropoetin{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="inject_eritropoetin[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1349,21 +1645,29 @@
                         </td>
                     @endif
                 @endfor
-                <td></td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_injectEritropoetin)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanInjectEritropoetin" name="catatan_injectEritropoetin">{{ $data->catatan_injectEritropoetin }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td rowspan="2">d. OBAT ORAL</td>
                 <td>Asam Folat 1x5 mg</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->oral_asamFolat))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="oralAsamFolat{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="oral_asamFolat[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="oralAsamFolat{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="oralAsamFolat{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="oral_asamFolat[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1371,20 +1675,28 @@
                         </td>
                     @endif
                 @endfor
-                <td></td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_oralAsamFolat)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanOralAsamFolat" name="catatan_oralAsamFolat">{{ $data->catatan_oralAsamFolat }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>Anti Hipertensi</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->oral_hipertensi))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="oralHipertensi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="oral_hipertensi[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="oralHipertensi{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="oralHipertensi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="oral_hipertensi[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1392,7 +1704,13 @@
                         </td>
                     @endif
                 @endfor
-                <td></td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_oralHipertensi)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanOralHipertensi" name="catatan_oralHipertensi">{{ $data->catatan_oralHipertensi }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>11. TATA LAKSANA/INTERVENSI</td>
@@ -1406,14 +1724,16 @@
                 <td>Medikamentosa</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->intervensi_medika))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="tatmedMedika{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="intervensi_medika[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="tatmedMedika{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="tatmedMedika{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="intervensi_medika[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1421,21 +1741,29 @@
                         </td>
                     @endif
                 @endfor
-                <td></td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_tatmedMedika)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanTatmedMedika" name="catatan_tatmedMedika">{{ $data->catatan_tatmedMedika }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td rowspan="7">b. TATA LAKSANA/INTERVENSI KEPERAWATAN</td>
                 <td>a. NIC : 4120 Manajemen cairan dan elektrolit</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->intervensi_elektrolit))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="tatkepElektrolit{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="intervensi_elektrolit[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="tatkepElektrolit{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="tatkepElektrolit{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="intervensi_elektrolit[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1443,20 +1771,28 @@
                         </td>
                     @endif
                 @endfor
-                <td rowspan="7">Mengaju pada NIC</td>
+                <td rowspan="7">
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_tatkepElektrolit)) !!}
+                    @else
+                        <textarea rows="15" class="form-control" id="catatanTatkepElektrolit" name="catatan_tatkepElektrolit">{{ $data->catatan_tatkepElektrolit }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>b. NIC: 3786 Manajemen hipertermia</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->intervensi_hipertermia))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="tatkepHipertermia{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="intervensi_hipertermia[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="tatkepHipertermia{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="tatkepHipertermia{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="intervensi_hipertermia[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1466,17 +1802,19 @@
                 @endfor
             </tr>
             <tr>
-                <td>b. NIC: 6540 Manajemen infeksi</td>
+                <td>c. NIC: 6540 Manajemen infeksi</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->intervensi_infeksi))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="tatkepInfeksi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="intervensi_infeksi[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="tatkepInfeksi{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="tatkepInfeksi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="intervensi_infeksi[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1489,14 +1827,16 @@
                 <td>d. NIC : 1100 Manajemen nutrisi</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->intervensi_nutrisi))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="tatkepNutrisi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="intervensi_nutrisi[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="tatkepNutrisi{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="tatkepNutrisi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="intervensi_nutrisi[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1509,14 +1849,16 @@
                 <td>e. NIC : 4310 Pemenuhan ADL</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->intervensi_ADL))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="tatkepADL{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="intervensi_ADL[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="tatkepADL{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="tatkepADL{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="intervensi_ADL[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1529,14 +1871,16 @@
                 <td>f. NIC : 4190 Kolaborasi pemasangan infus</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->intervensi_infus))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="tatkepInfus{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="intervensi_infus[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="tatkepInfus{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="tatkepInfus{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="intervensi_infus[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1549,14 +1893,16 @@
                 <td>g. NIC : 2380 Kolaborasi pemberian obat</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->intervensi_obat))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="tatkepObat{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="intervensi_obat[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="tatkepObat{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="tatkepObat{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="intervensi_obat[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1568,18 +1914,20 @@
             <tr>
                 <td>c. TATA LAKSANA/INTERVENSI GIZI</td>
                 <td>Memberikan makanan berdasarkan kebutuhan gizi dalam bentuk cair, saring, lunak, biasa, secara
-                    bertahap sesuai dengan kondisi klinis, dengan jenis sesuai dengan assesmen gizi masing- masing
+                    bertahap sesuai dengan kondisi klinis, dengan jenis sesuai dengan assesmen gizi masing-masing
                     pasien</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->intervensi_gizi))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="tatgizi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="intervensi_gizi[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="tatgizi{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="tatgizi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="intervensi_gizi[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1587,21 +1935,29 @@
                         </td>
                     @endif
                 @endfor
-                <td></td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_tatgizi)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanTatgizi" name="catatan_tatgizi">{{ $data->catatan_tatgizi }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>d. TATA LAKSANA/INTERVENSI FARMASI</td>
                 <td>Rekomendasi kepala DPJP</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->intervensi_dpjp))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="tatfarmDPJP{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="intervensi_dpjp[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="tatfarmDPJP{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="tatfarmDPJP{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="intervensi_dpjp[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1609,7 +1965,13 @@
                         </td>
                     @endif
                 @endfor
-                <td>Sesuai dengan hasil monitoring</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_tatfarmDPJP)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanTatFarmDPJP" name="catatan_tatfarmDPJP">{{ $data->catatan_tatfarmDPJP }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>12. MONITORING & EVALUASI (monitor perkembangan pasien)</td>
@@ -1623,14 +1985,16 @@
                 <td>Asesmen Ulang & Review Verifikasi Rencana Asuhan</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->monev_dpjp))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="monevDPJP{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_dpjp[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="monevDPJP{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="monevDPJP{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_dpjp[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1638,21 +2002,29 @@
                         </td>
                     @endif
                 @endfor
-                <td>Monitor perkembangan pasien</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_monevDPJP)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanMonevDPJP" name="catatan_monevDPJP">{{ $data->catatan_monevDPJP }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td rowspan="5">b. KEPERAWATAN</td>
                 <td>a. Monitoring vital sign pasien</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->monev_vital))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevkepVital{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_vital[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="monevkepVital{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevkepVital{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_vital[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1660,20 +2032,28 @@
                         </td>
                     @endif
                 @endfor
-                <td rowspan="5">Mengacu pada NOC</td>
+                <td rowspan="5">
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_monevkepVital)) !!}
+                    @else
+                        <textarea rows="10" class="form-control" id="catatanMonevkepVital" name="catatan_monevkepVital">{{ $data->catatan_monevkepVital }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>b. Monitoring intake dan output cairan</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->monev_cairan))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevkepCairan{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_cairan[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="monevkepCairan{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevkepCairan{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_cairan[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1686,14 +2066,16 @@
                 <td>c. Monitoring nutrisi</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->monev_nutrisi))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevkepNutrisi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_nutrisi[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="monevkepNutrisi{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevkepNutrisi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_nutrisi[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1706,14 +2088,16 @@
                 <td>d. Monitoring skala nyeri</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->monev_nyeri))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevkepNyeri{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_nyeri[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="monevkepNyeri{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevkepNyeri{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_nyeri[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1726,14 +2110,16 @@
                 <td>e. Monitoring tanda-tanda infeksi</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->monev_infeksi))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevkepInfeksi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_infeksi[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="monevkepInfeksi{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevkepInfeksi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_infeksi[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1747,14 +2133,16 @@
                 <td>Monitoring asupan makanan</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->monev_makanan))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevgiziMakanan{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_makanan[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="monevgiziMakanan{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevgiziMakanan{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_makanan[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1763,23 +2151,27 @@
                     @endif
                 @endfor
                 <td>
-                    Sesuai dengan masalah gizi dan tanda gejala yang akan
-                    dilihat kemajuannya. Monev pada hari ke 4 atau ke 5 kecuali
-                    asupan makanan
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_monevgiziMakanan)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanMonevgiziMakanan" name="catatan_monevgiziMakanan">{{ $data->catatan_monevgiziMakanan }}</textarea>
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td>Monitoring Antropometri</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->monev_antropometri))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 2) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevgiziAntropometri{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_antropometri[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="monevgiziAntropometri{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 2) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevgiziAntropometri{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_antropometri[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1787,20 +2179,28 @@
                         </td>
                     @endif
                 @endfor
-                <td></td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_monevAntropometri)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanMonevAntropometri" name="catatan_monevAntropometri">{{ $data->catatan_monevAntropometri }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>Monitoring biokimia</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->monev_biokimia))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 2) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevgiziBiokimia{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_biokimia[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="monevgiziBiokimia{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 2) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevgiziBiokimia{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_biokimia[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1808,20 +2208,28 @@
                         </td>
                     @endif
                 @endfor
-                <td></td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_monevgiziBiokimia)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanMonevgiziBiokimia" name="catatan_monevgiziBiokimia">{{ $data->catatan_monevgiziBiokimia }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>Monitoring fisik/klinis terkait gizi</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->monev_fisik))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 2) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevgiziFisik{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_fisik[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="monevgiziFisik{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 2) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevgiziFisik{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_fisik[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1829,21 +2237,29 @@
                         </td>
                     @endif
                 @endfor
-                <td></td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_monevgiziFisik)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanMonevgiziFisik" name="catatan_monevgiziFisik">{{ $data->catatan_monevgiziFisik }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td rowspan="3">d. FARMASI</td>
                 <td>Monitoring efektivitas obat</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->monev_efektiv))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevfarmEfektiv{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_efektiv[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="monevfarmEfektiv{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevfarmEfektiv{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_efektiv[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1852,22 +2268,27 @@
                     @endif
                 @endfor
                 <td rowspan="3">
-                    Dilanjutkan dengan intervensi farmasi yang sesuai hasil
-                    monitoring
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_monevfarmEfektiv)) !!}
+                    @else
+                        <textarea rows="6" class="form-control" id="catatanMonevfarmEfektiv" name="catatan_monevfarmEfektiv">{{ $data->catatan_monevfarmEfektiv }}</textarea>
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td>Monitoring interaksi obat</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->monev_interaksi))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevfarmInteraksi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_interaksi[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="monevfarmInteraksi{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevfarmInteraksi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_interaksi[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1880,14 +2301,16 @@
                 <td>Monitoring efek samping obat</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->monev_efek))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevfarmEfek{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_efek[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="monevfarmEfek{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="monevfarmEfek{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="monev_efek[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1908,14 +2331,16 @@
                 <td></td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->mob_medis))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="mobmed{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="mob_medis[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="mobmed{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="mobmed{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="mob_medis[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1923,21 +2348,29 @@
                         </td>
                     @endif
                 @endfor
-                <td rowspan="3">Tahapan mobilisasi sesuai kondisi pasien</td>
+                <td rowspan="3">
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_mobmed)) !!}
+                    @else
+                        <textarea rows="6" class="form-control" id="catatanMobmed" name="catatan_mobmed">{{ $data->catatan_mobmed }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>b. KEPERAWATAN</td>
                 <td>Dibantu sebagian/mandiri</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->mob_keperawatan))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="mobkep{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="mob_keperawatan[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="mobkep{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="mobkep{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="mob_keperawatan[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1951,14 +2384,16 @@
                 <td></td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->mob_fisio))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="mobfisio{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="mob_fisio[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="mobfisio{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="mobfisio{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="mob_fisio[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1979,14 +2414,16 @@
                 <td>Batuk atau sesak teratasi</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->hasil_batuk))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 4) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="hasmedBatuk{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="hasil_batuk[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="hasmedBatuk{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 4) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="hasmedBatuk{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="hasil_batuk[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -1994,20 +2431,28 @@
                         </td>
                     @endif
                 @endfor
-                <td></td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_hasmedBatuk)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanHasmedBatuk" name="catatan_hasmedBatuk">{{ $data->catatan_hasmedBatuk }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>Laboratorium (Ur, Cr, eGFR) paska HD perbaikan</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->hasil_lab))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 4) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="hasmedLab{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="hasil_lab[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="hasmedLab{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 4) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="hasmedLab{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="hasil_lab[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -2015,21 +2460,29 @@
                         </td>
                     @endif
                 @endfor
-                <td></td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_hasmedLab)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanHasmedLab" name="catatan_hasmedLab">{{ $data->catatan_hasmedLab }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td rowspan="3">b. KEPERAWATAN</td>
                 <td>a. Tanda vital dalam batas normal</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->hasil_vital))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="haskepVital{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="hasil_vital[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="haskepVital{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="haskepVital{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="hasil_vital[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -2037,20 +2490,28 @@
                         </td>
                     @endif
                 @endfor
-                <td>Mengacu pada NOC</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_haskepVital)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanHaskepVital" name="catatan_haskepVital">{{ $data->catatan_haskepVital }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>b. Indeks output seimbang</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->hasil_seimbang))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="haskepSeimbang{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="hasil_seimbang[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="haskepSeimbang{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="haskepSeimbang{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="hasil_seimbang[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -2058,20 +2519,28 @@
                         </td>
                     @endif
                 @endfor
-                <td></td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_haskepSeimbang)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanHaskepSeimbang" name="catatan_haskepSeimbang">{{ $data->catatan_haskepSeimbang }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>c. Tidak ada tanda-tanda infeksi</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->hasil_infeksi))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="haskepInfeksi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="hasil_infeksi[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="haskepInfeksi{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="haskepInfeksi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="hasil_infeksi[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -2079,21 +2548,29 @@
                         </td>
                     @endif
                 @endfor
-                <td>Dilakukan dalam 3 shift</td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_haskepInfeksi)) !!}
+                    @else
+                        <textarea rows="3" class="form-control" id="catatanHaskepInfeksi" name="catatan_haskepInfeksi">{{ $data->catatan_haskepInfeksi }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td rowspan="2">c. GIZI</td>
                 <td>Asupan makanan >= 80%</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->hasil_asupan))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="hasgiziAsupan{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="hasil_asupan[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="hasgiziAsupan{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="hasgiziAsupan{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="hasil_asupan[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -2102,21 +2579,27 @@
                     @endif
                 @endfor
                 <td rowspan="2">
-                    Status Gizi berdasarkan antropometri, biokimia, fisik/klinis
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_hasgiziAsupan)) !!}
+                    @else
+                        <textarea rows="5" class="form-control" id="catatanHasgiziAsupan" name="catatan_hasgiziAsupan">{{ $data->catatan_hasgiziAsupan }}</textarea>
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td>Optimalisasi Status Gizi</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->hasil_status))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="hasgiziStatus{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="hasil_status[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="hasgiziStatus{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i < 3) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="hasgiziStatus{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="hasil_status[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -2130,14 +2613,16 @@
                 <td>Terapi obat sesuai indikasi</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->hasil_terapi))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="hasgiziTerapi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="hasil_terapi[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="hasgiziTerapi{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="hasgiziTerapi{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="hasil_terapi[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -2145,20 +2630,28 @@
                         </td>
                     @endif
                 @endfor
-                <td rowspan="2">Meningkatkan kualitas hidup pasien</td>
+                <td rowspan="2">
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_hasgiziTerapi)) !!}
+                    @else
+                        <textarea rows="5" class="form-control" id="catatanHasgiziTerapi" name="catatan_hasgiziTerapi">{{ $data->catatan_hasgiziTerapi }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>Obat rasional</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->hasil_rasional))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="hasgiziRasional{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="hasil_rasional[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="hasgiziRasional{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit') style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="hasgiziRasional{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="hasil_rasional[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -2172,14 +2665,16 @@
                 <td>Umum: hemodinamik stabil, keluhan berkurang atau hilang</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->pulang_umum))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 4) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="pulangUmum{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="pulang_umum[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="pulangUmum{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 4) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="pulangUmum{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="pulang_umum[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -2187,20 +2682,28 @@
                         </td>
                     @endif
                 @endfor
-                <td rowspan="2">Status pasien/tanda vital sesuai dengan PPK</td>
+                <td rowspan="2">
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_pulangUmum)) !!}
+                    @else
+                        <textarea rows="5" class="form-control" id="catatanPulangUmum" name="catatan_pulangUmum">{{ $data->catatan_pulangUmum }}</textarea>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>Khusus: tidak ada komplikasi</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->pulang_khusus))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 4) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="pulangKhusus{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="pulang_khusus[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="pulangKhusus{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 4) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="pulangKhusus{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="pulang_khusus[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -2216,14 +2719,16 @@
                 <td>Resume Medis dan Keperawatan</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->rencana_resume))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 4) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="rencanaResume{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="rencana_resume[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="rencanaResume{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 4) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="rencanaResume{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="rencana_resume[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -2232,22 +2737,27 @@
                     @endif
                 @endfor
                 <td rowspan="3">
-                    Pasien membawa Resume Perawatan/Surat Rujukan/Surat
-                    Kontrol/Homecare saat pulang
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_rencanaResume)) !!}
+                    @else
+                        <textarea rows="6" class="form-control" id="catatanRencanaResume" name="catatan_rencanaResume">{{ $data->catatan_rencanaResume }}</textarea>
+                    @endif
                 </td>
             </tr>
             <tr>
                 <td>Penjelasan diberikan sesuai dengan keadaan umum pasien</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->rencana_penjelasan))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 4) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="rencanaPenjelasan{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="rencana_penjelasan[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="rencanaPenjelasan{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 4) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="rencanaPenjelasan{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="rencana_penjelasan[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -2260,14 +2770,16 @@
                 <td>Surat pengantar kontrol</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->rencana_surat))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 4) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="rencanaSurat{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="rencana_surat[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="rencanaSurat{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 4) style="background-color: #FEA8B9" @endif>
                             <input type="checkbox" id="rencanaSurat{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="rencana_surat[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -2281,14 +2793,16 @@
                 <td>Rencana operasi AV Shunt (untuk akses permanen)</td>
                 @for ($i = 0; $i < 5; $i++)
                     @if (in_array($i + 1, $data->varian_rencana))
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 4) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="varianRencana{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="varian_rencana[ {{ $i }} ]" @endif
                                 checked>
                             <label class="p-1 me-2 mt-2" for="varianRencana{{ $i }}"></label>
                         </td>
                     @else
-                        <td class="text-center p-1">
+                        <td class="text-center p-1"
+                            @if ($cmd === 'edit' && $i === 4) style="background-color: #95FFFF" @endif>
                             <input type="checkbox" id="varianRencana{{ $i }}" value="1"
                                 @if ($cmd === 'show') onclick="return false" @elseif ($cmd === 'edit') name="varian_rencana[ {{ $i }} ]" @endif>
                             <label class="p-1 me-2 mt-2 @if ($cmd === 'show') d-none @endif"
@@ -2296,7 +2810,13 @@
                         </td>
                     @endif
                 @endfor
-                <td></td>
+                <td>
+                    @if ($cmd === 'show')
+                        {!! nl2br(e($data->catatan_varianRencana)) !!}
+                    @else
+                        <textarea rows="6" class="form-control" id="catatanVarianRencana" name="catatan_varianRencana">{{ $data->catatan_varianRencana }}</textarea>
+                    @endif
+                </td>
             </tr>
         </tbody>
     </table>

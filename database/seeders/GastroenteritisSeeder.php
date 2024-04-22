@@ -15,6 +15,7 @@ class GastroenteritisSeeder extends Seeder
     {
         DB::table('gastroenteritis')->insert([
             [
+                'table' => 'Gastroenteritis',
                 'noReg' => 'RG03299949',
                 'nama' => 'FAJAR HAQQY ASHBAHANIE',
                 'jenis_kelamin' => 'Laki-laki',

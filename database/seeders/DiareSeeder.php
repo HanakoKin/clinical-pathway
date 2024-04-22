@@ -15,6 +15,7 @@ class DiareSeeder extends Seeder
     {
         DB::table('diares')->insert([
             [
+                'table' => 'Diare',
                 'noReg' => 'RG03299949',
                 'nama' => 'FAJAR HAQQY ASHBAHANIE',
                 'jenis_kelamin' => 'Laki-laki',

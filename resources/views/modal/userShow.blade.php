@@ -1,5 +1,5 @@
-<div class="modal fade bs-example-modal-lg" id="showUser" tabindex="-1" role="dialog"
-    aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal fade bs-example-modal-lg" id="showUser" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -31,19 +31,15 @@
                                         <tbody>
                                             <tr>
                                                 <td width="200">Nama</td>
-                                                <td id="nama"></td>
+                                                <td id="name"></td>
                                             </tr>
                                             <tr>
-                                                <td>Username</td>
-                                                <td id="username"></td>
+                                                <td>Email</td>
+                                                <td id="email"></td>
                                             </tr>
                                             <tr>
-                                                <td>Unit</td>
-                                                <td id="unit"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Jumlah Kasus oleh unit ini</td>
-                                                <td id="totalLapin"></td>
+                                                <td>Role</td>
+                                                <td id="role"></td>
                                             </tr>
                                         </tbody>
                                     </table>

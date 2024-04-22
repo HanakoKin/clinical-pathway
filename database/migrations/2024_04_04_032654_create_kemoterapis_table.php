@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
 
             /* DATA PASIEN */
+            $table->string('table');
             $table->string('noReg');
             $table->string('nama')->nullable();
             $table->string('jenis_kelamin')->nullable();

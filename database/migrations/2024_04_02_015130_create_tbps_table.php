@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
 
             /* DATA PASIEN */
+            $table->string('table');
             $table->string('noReg');
             $table->string('nama')->nullable();
             $table->string('jenis_kelamin')->nullable();
@@ -123,6 +124,7 @@ return new class extends Migration
             $table->text('catatan_lemEdTer')->nullable();
 
             /* TABEL 9. TERAPI/MEDIKAMENTOSA */
+            $table->text('catatan_injeksi')->nullable();
             $table->text('injeksi_levifloksasin')->nullable();
             $table->text('injeksi_streptomisin')->nullable();
             $table->text('injeksi_transenamat')->nullable();

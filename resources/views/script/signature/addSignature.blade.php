@@ -53,10 +53,22 @@
     }
 
     // Initialize signature pads for each canvas
-    initializeSignaturePad('signature-pad-dokter', 'ttd_dokter', 'clear-dokter', 'undo-dokter', 'save-dokter',
-        'modal-dokter');
-    initializeSignaturePad('signature-pad-perawat', 'ttd_perawat', 'clear-perawat', 'undo-perawat', 'save-perawat',
-        'modal-perawat');
-    initializeSignaturePad('signature-pad-pelaksana', 'ttd_pelaksana', 'clear-pelaksana', 'undo-pelaksana',
-        'save-pelaksana', 'modal-pelaksana');
+
+    @php
+        $role = Auth::user()->role;
+        $signaturePads = [
+            'admin' => ['dokter', 'perawat', 'pelaksana'],
+            'dokter' => ['dokter'],
+            'perawat' => ['perawat'],
+            'pelaksana' => ['pelaksana'],
+        ];
+    @endphp
+
+    @foreach ($signaturePads[$role] as $signaturePad)
+        @if ($role == 'admin' || $role == $signaturePad)
+            initializeSignaturePad('signature-pad-{{ $signaturePad }}', 'ttd_{{ $signaturePad }}',
+                'clear-{{ $signaturePad }}', 'undo-{{ $signaturePad }}', 'save-{{ $signaturePad }}',
+                'modal-{{ $signaturePad }}');
+        @endif
+    @endforeach
 </script>

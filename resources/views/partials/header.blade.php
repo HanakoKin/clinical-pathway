@@ -34,8 +34,7 @@
                 </li>
                 <li class="btn-group nav-item d-none d-xl-inline-block">
                     <div class="b-2 border-info rounded10">
-                        {{-- <h4 class="text-info m-3">{{ ucfirst(trans(Auth::user()->nama)) }} -
-                            {{ !Auth::user()->unit ? 'Admin' : Auth::user()->unit }}</h4> --}}
+                        <h4 class="text-info m-3">{{ Auth::user()->name }}</h4>
                     </div>
                 </li>
             </ul>
@@ -51,11 +50,10 @@
                     </a>
                     <ul class="dropdown-menu animated flipInX">
                         <li class="user-body">
-                            <a class="dropdown-item" href=""><i class="ti-user text-muted me-2"></i> Profile</a>
-                            <a class="dropdown-item" href=""><i class="ti-settings text-muted me-2"></i>
-                                Settings</a>
+                            <a class="dropdown-item" href="{{ route('profile.edit') }}"><i
+                                    class="ti-user text-muted me-2"></i> Profile</a>
                             <div class="dropdown-divider"></div>
-                            <form method="POST" action="{{ url('/logout') }}" class="d-inline">
+                            <form method="POST" action="{{ route('logout') }}" class="d-inline">
                                 @csrf
                                 <button type="submit" class="dropdown-item ms-1"
                                     style="padding: 10px 10px; font-size: 1.0rem; width: 100%">

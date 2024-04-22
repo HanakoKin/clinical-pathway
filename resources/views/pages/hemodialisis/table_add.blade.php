@@ -798,17 +798,10 @@
             <tr>
                 <td rowspan="4">c. INJEKSI</td>
                 <td>Antikoagulan</td>
-                @for ($i = 0; $i < 5; $i++)
-                    <td class="text-center p-1"
-                        @if ($i === 0) style="background-color: #95FFFF" @endif>
-                        <input type="checkbox" id="injectAntikoagulan{{ $i }}" value="1"
-                            name="inject_antikoagulan[ {{ $i }} ]" />
-                        <label class="p-1 me-2 mt-2" for="injectAntikoagulan{{ $i }}"></label>
+                @for ($i = 0; $i < 6; $i++)
+                    <td>
                     </td>
                 @endfor
-                <td>
-                    <textarea rows="3" class="form-control" id="catatanInjectAntikoagulan" name="catatan_injectAntikoagulan">Optional</textarea>
-                </td>
             </tr>
             <tr>
                 <td>Diberikan dosis awal secara bolus 2000 IU, tunggu 3-5 menit untuk membiarkan heparin menyebar merata
@@ -929,7 +922,7 @@
                 @endfor
             </tr>
             <tr>
-                <td>b. NIC: 6540 Manajemen infeksi</td>
+                <td>c. NIC: 6540 Manajemen infeksi</td>
                 @for ($i = 0; $i < 5; $i++)
                     <td class="text-center p-1"
                         @if ($i < 3) style="background-color: #FEA8B9" @endif>

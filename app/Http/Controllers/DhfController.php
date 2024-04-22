@@ -193,6 +193,8 @@ class DhfController extends Controller
         // dd($request);
 
         $validator = Validator::make($request->all(), [
+
+            "table" => "string",
             "noReg" => "string",
             "nama" => "nullable|string",
             "jenis_kelamin" => "nullable|string",
@@ -664,6 +666,7 @@ class DhfController extends Controller
         // dd($request);
 
         $validator = Validator::make($request->all(), [
+            "table" => "string",
             "noReg" => "string",
             "nama" => "nullable|string",
             "jenis_kelamin" => "nullable|string",

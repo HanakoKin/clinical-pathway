@@ -57,12 +57,27 @@
             backgroundColor: 'rgb(255, 255, 255)'
         });
 
-        function resizeCanvas() {
-            var ratio = Math.max(window.devicePixelRatio || 1, 1);
-            canvas.width = 370;
-            canvas.height = 200;
-            canvas.getContext("2d").scale(ratio, ratio);
-        }
+        @php
+            $isAdmin = Auth::user()->role == 'admin';
+        @endphp
+
+        var ratio = Math.max(window.devicePixelRatio || 2, 1);
+
+
+        @if ($isAdmin)
+            function resizeCanvas() {
+                canvas.width = 500;
+                canvas.height = 200;
+                canvas.getContext("2d").scale(ratio, ratio);
+            }
+        @else
+            function resizeCanvas() {
+                canvas.width = 797;
+                canvas.height = 266;
+                canvas.getContext("2d").scale(ratio, ratio);
+            }
+        @endif
+
 
         window.onresize = resizeCanvas;
         resizeCanvas();
@@ -98,11 +113,24 @@
 
     }
 
-    initializeSignaturePad('signature-pad-dokter', 'signature-dokter', 'ttd_dokter', 'clear-dokter', 'undo-dokter',
-        'save-dokter', 'modal-dokter', 'new-signature-dokter', 'old-signature-dokter', 'hidden-dokter');
-    initializeSignaturePad('signature-pad-perawat', 'signature-perawat', 'ttd_perawat', 'clear-perawat', 'undo-perawat',
-        'save-perawat', 'modal-perawat', 'new-signature-perawat', 'old-signature-perawat', 'hidden-perawat');
-    initializeSignaturePad('signature-pad-pelaksana', 'signature-pelaksana', 'ttd_pelaksana', 'clear-pelaksana',
-        'undo-pelaksana', 'save-pelaksana', 'modal-pelaksana',
-        'new-signature-pelaksana', 'old-signature-pelaksana', 'hidden-pelaksana');
+    @php
+        $role = Auth::user()->role;
+        $signaturePads = [
+            'admin' => ['dokter', 'perawat', 'pelaksana'],
+            'dokter' => ['dokter'],
+            'perawat' => ['perawat'],
+            'pelaksana' => ['pelaksana'],
+        ];
+    @endphp
+
+    @foreach ($signaturePads[$role] as $signaturePad)
+        @if ($role == 'admin' || $role == $signaturePad)
+            initializeSignaturePad('signature-pad-{{ $signaturePad }}', 'signature-{{ $signaturePad }}',
+                'ttd_{{ $signaturePad }}',
+                'clear-{{ $signaturePad }}', 'undo-{{ $signaturePad }}', 'save-{{ $signaturePad }}',
+                'modal-{{ $signaturePad }}',
+                'new-signature-{{ $signaturePad }}', 'old-signature-{{ $signaturePad }}',
+                'hidden-{{ $signaturePad }}');
+        @endif
+    @endforeach
 </script>

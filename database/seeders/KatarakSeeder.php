@@ -14,6 +14,7 @@ class KatarakSeeder extends Seeder
     public function run()
     {
         DB::table('kataraks')->insert([
+            'table' => 'Katarak',
             'id' => 1,
             'noReg' => 'RG03299949',
             'nama' => 'FAJAR HAQQY ASHBAHANIE',

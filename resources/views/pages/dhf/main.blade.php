@@ -71,10 +71,21 @@
                                                     Edit
                                                 </a>
 
-                                                <a href="{{ url('/dhf/delete', $data->id) }}" data-target="dhf"
-                                                    class="btn btn-danger btn-sm me-2 mb-2 text-decoration-none deleteBtn"><i
-                                                        class="fal fa-trash-alt"></i> Delete
-                                                </a>
+                                                <form id="deleteDataForm_{{ $data->id }}" class="d-inline-block"
+                                                    action="{{ url('/dhf/delete', $data->id) }}" method="POST"
+                                                    data-target="{{ $data->nama }}'s data">
+                                                    @csrf
+                                                    @method('DELETE')
+
+                                                    <input type="hidden" name="name" value="{{ $data->nama }}">
+                                                    <input type="hidden" name="role" value="{{ $data->role }}">
+
+                                                    <button type="submit"
+                                                        class="btn btn-danger btn-sm me-2 mb-2 text-decoration-none deleteBtn"
+                                                        data-user-id="{{ $data->id }}">
+                                                        <i class="fal fa-trash-alt"></i> Delete
+                                                    </button>
+                                                </form>
 
                                             </td>
                                         </tr>
@@ -88,7 +99,9 @@
         </div>
 
         {{-- JS for Delete --}}
-        @include('script.confirm.confirm-delete')
+        @include('script.confirm.delete')
+
+        {{-- @include('script.confirm.confirm-delete') --}}
 
     </section>
 @endsection

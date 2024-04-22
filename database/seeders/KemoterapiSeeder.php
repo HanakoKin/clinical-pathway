@@ -14,6 +14,7 @@ class KemoterapiSeeder extends Seeder
     public function run()
     {
         DB::table('kemoterapis')->insert([
+            'table' => 'Kemoterapi',
             'id' => 1,
             'noReg' => 'RG03299949',
             'nama' => 'FAJAR HAQQY ASHBAHANIE',

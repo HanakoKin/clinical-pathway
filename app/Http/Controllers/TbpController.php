@@ -207,6 +207,7 @@ class TbpController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
+            'table' => 'string',
             'noReg' => 'string',
             'nama' => 'nullable|string',
             'jenis_kelamin' => 'nullable|string',
@@ -730,6 +731,7 @@ class TbpController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
+            'table' => 'string',
             'noReg' => 'string',
             'nama' => 'nullable|string',
             'jenis_kelamin' => 'nullable|string',

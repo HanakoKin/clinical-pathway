@@ -45,6 +45,8 @@
 
                         @csrf
 
+                        <input type="hidden" name="table" value="DHF">
+
                         <div class="box-body row">
 
                             <div class="col-lg-4 col-12">
@@ -188,195 +190,103 @@
 
                             @include('pages.dhf.table_add')
 
-                            <div class="col-lg-4 col-12">
-                                <div class="form-group">
-                                    <label for="tanggal_laporan" class="form-label">Tanggal Laporan</label>
-                                    <input type="text" id="tanggal_laporan" class="form-control"
-                                        name="tanggal_laporan" placeholder="Tanggal Laporan">
-                                </div>
-                            </div>
-
                             <div class="col-12">
                                 <div class="row">
 
-                                    <div class="col-lg-4 col-12">
-                                        <div class="form-group">
-                                            <label for="nama_dokter" class="form-label">Nama Dokter</label>
-                                            <input type="text" id="nama_dokter" class="form-control"
-                                                name="nama_dokter" placeholder="Nama Dokter">
-                                        </div>
-                                        <div class="signature">
-                                            <div class="text-center">
-                                                <label class="form-label text-bold fs-16">TTD Dokter Penanggung Jawab
-                                                    Pelayanan</label>
-                                            </div>
+                                    @php
+                                        $role = Auth::user()->role;
+                                        $signaturePads = [
+                                            'admin' => ['dokter', 'perawat', 'pelaksana'],
+                                            'dokter' => ['dokter'],
+                                            'perawat' => ['perawat'],
+                                            'pelaksana' => ['pelaksana'],
+                                        ];
+                                    @endphp
+
+                                    <div class="{{ Auth::user()->role == 'admin' ? 'col-lg-4' : 'col-lg-3' }}">
+                                        <div class="row">
                                             <div class="form-group">
-                                                <div class="signature mb-3">
-                                                    <div class="text-right  d-flex justify-content-center">
-                                                        <button type="button" class="btn btn-default btn-sm me-1"
-                                                            id="undo-dokter"><i class="fa fa-undo"></i> Undo</button>
-                                                        <button type="button" class="btn btn-danger btn-sm"
-                                                            id="clear-dokter"><i class="fa fa-eraser"></i>
-                                                            Clear</button>
-                                                    </div>
-                                                    <div class="wrapper mt-2">
-                                                        <canvas id="signature-pad-dokter"
-                                                            class="signature-pad b-5 border-dark" style="width: 100%;"
-                                                            height="250"></canvas>
-                                                    </div>
-
-                                                    <div class="form-control-feedback"><small>Pastikan menekan tombol
-                                                            <code>Preview &
-                                                                Confirm</code> sebelum mengisi form selanjutnya!</small>
-                                                    </div>
-
-                                                    <div class="button mt-2">
-                                                        <button type="button" class="btn btn-info btn-sm"
-                                                            id="save-dokter"><i class="fas fa-check-circle"></i>
-                                                            Preview &
-                                                            Confirm</button>
-                                                    </div>
-                                                    <!-- Modal untuk tampil preview tanda tangan-->
-                                                    <div class="modal fade" id="modal-dokter" tabindex="-1"
-                                                        role="dialog" aria-labelledby="myModalLabel">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h4 class="modal-title" id="myModalLabel">Preview
-                                                                        Tanda
-                                                                        Tangan</h4>
-                                                                    <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="modal"
-                                                                        aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <label for="tanggal_laporan" class="form-label">Tanggal
+                                                    Laporan</label>
+                                                <input type="text" id="tanggal_laporan" class="form-control"
+                                                    name="tanggal_laporan" placeholder="Tanggal Laporan">
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-4 col-12">
-                                        <div class="form-group">
-                                            <label for="nama_perawat" class="form-label">Nama Perawat</label>
-                                            <input type="text" id="nama_perawat" class="form-control"
-                                                name="nama_perawat" placeholder="Nama Perawat">
-                                        </div>
-                                        <div class="signature">
-                                            <div class="text-center">
-                                                <label class="form-label text-bold fs-16">TTD Perawat Penanggung
-                                                    Jawab</label>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="signature mb-3">
-                                                    <div class="text-right  d-flex justify-content-center">
-                                                        <button type="button" class="btn btn-default btn-sm me-1"
-                                                            id="undo-perawat"><i class="fa fa-undo"></i> Undo</button>
-                                                        <button type="button" class="btn btn-danger btn-sm"
-                                                            id="clear-perawat"><i class="fa fa-eraser"></i>
-                                                            Clear</button>
-                                                    </div>
-                                                    <div class="wrapper mt-2">
-                                                        <canvas id="signature-pad-perawat"
-                                                            class="signature-pad b-5 border-dark" style="width: 100%;"
-                                                            height="250"></canvas>
-                                                    </div>
+                                    <div class="{{ Auth::user()->role == 'admin' ? 'col-12' : 'col-8' }}">
+                                        <div class="row">
+                                            @foreach ($signaturePads[$role] as $signaturePad)
+                                                @if ($role == 'admin' || $role == $signaturePad)
+                                                    <div
+                                                        class="{{ Auth::user()->role == 'admin' ? 'col-lg-4 col-12' : 'col-lg-10 col-12' }}">
+                                                        <div class="form-group">
+                                                            <label for="nama_{{ $signaturePad }}" class="form-label">Nama
+                                                                {{ ucfirst($signaturePad) }}</label>
+                                                            <input type="text" id="nama_{{ $signaturePad }}"
+                                                                class="form-control" name="nama_{{ $signaturePad }}"
+                                                                placeholder="Nama {{ ucfirst($signaturePad) }}">
+                                                        </div>
+                                                        <div class="signature">
+                                                            <div class="text-center">
+                                                                <label class="form-label text-bold fs-16">TTD
+                                                                    {{ ucfirst($signaturePad) }} Penanggung Jawab
+                                                                    Pelayanan</label>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="signature mb-3">
+                                                                    <div class="text-right  d-flex justify-content-center">
+                                                                        <button type="button"
+                                                                            class="btn btn-default btn-sm me-1"
+                                                                            id="undo-{{ $signaturePad }}"><i
+                                                                                class="fa fa-undo"></i> Undo</button>
+                                                                        <button type="button"
+                                                                            class="btn btn-danger btn-sm"
+                                                                            id="clear-{{ $signaturePad }}"><i
+                                                                                class="fa fa-eraser"></i> Clear</button>
+                                                                    </div>
+                                                                    <div class="wrapper mt-2">
+                                                                        <canvas id="signature-pad-{{ $signaturePad }}"
+                                                                            class="signature-pad b-5 border-dark"
+                                                                            style="width: 100%;" height="250"></canvas>
+                                                                    </div>
 
-                                                    <div class="form-control-feedback"><small>Pastikan menekan tombol
-                                                            <code>Preview &
-                                                                Confirm</code> sebelum mengisi form selanjutnya!</small>
-                                                    </div>
+                                                                    <div class="form-control-feedback"><small>Pastikan
+                                                                            menekan tombol <code>Preview & Confirm</code>
+                                                                            sebelum mengisi form selanjutnya!</small></div>
 
-                                                    <div class="button mt-2">
-                                                        <button type="button" class="btn btn-info btn-sm"
-                                                            id="save-perawat"><i class="fas fa-check-circle"></i>
-                                                            Preview &
-                                                            Confirm</button>
-                                                    </div>
-                                                    <!-- Modal untuk tampil preview tanda tangan-->
-                                                    <div class="modal fade" id="modal-perawat" tabindex="-1"
-                                                        role="dialog" aria-labelledby="myModalLabel">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h4 class="modal-title" id="myModalLabel">Preview
-                                                                        Tanda
-                                                                        Tangan</h4>
-                                                                    <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="modal"
-                                                                        aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
+                                                                    <div class="button mt-2">
+                                                                        <button type="button" class="btn btn-info btn-sm"
+                                                                            id="save-{{ $signaturePad }}"><i
+                                                                                class="fas fa-check-circle"></i> Preview &
+                                                                            Confirm</button>
+                                                                    </div>
+                                                                    <!-- Modal untuk tampil preview tanda tangan-->
+                                                                    <div class="modal fade"
+                                                                        id="modal-{{ $signaturePad }}" tabindex="-1"
+                                                                        role="dialog" aria-labelledby="myModalLabel">
+                                                                        <div class="modal-dialog" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h4 class="modal-title"
+                                                                                        id="myModalLabel">Preview Tanda
+                                                                                        Tangan</h4>
+                                                                                    <button type="button"
+                                                                                        class="btn-close"
+                                                                                        data-bs-dismiss="modal"
+                                                                                        aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-4 col-12">
-                                        <div class="form-group">
-                                            <label for="nama_pelaksana" class="form-label">Nama Pelaksana</label>
-                                            <input type="text" id="nama_pelaksana" class="form-control"
-                                                name="nama_pelaksana" placeholder="Nama Pelaksana">
-                                        </div>
-                                        <div class="signature">
-                                            <div class="text-center">
-                                                <label class="form-label text-bold fs-16">TTD Pelaksana
-                                                    Verifikasi</label>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="signature mb-3">
-                                                    <div class="text-right  d-flex justify-content-center">
-                                                        <button type="button" class="btn btn-default btn-sm me-1"
-                                                            id="undo-pelaksana"><i class="fa fa-undo"></i>
-                                                            Undo</button>
-                                                        <button type="button" class="btn btn-danger btn-sm"
-                                                            id="clear-pelaksana"><i class="fa fa-eraser"></i>
-                                                            Clear</button>
-                                                    </div>
-                                                    <div class="wrapper mt-2">
-                                                        <canvas id="signature-pad-pelaksana"
-                                                            class="signature-pad b-5 border-dark" style="width: 100%;"
-                                                            height="250"></canvas>
-                                                    </div>
-
-                                                    <div class="form-control-feedback"><small>Pastikan menekan tombol
-                                                            <code>Preview &
-                                                                Confirm</code> sebelum mengisi form selanjutnya!</small>
-                                                    </div>
-
-                                                    <div class="button mt-2">
-                                                        <button type="button" class="btn btn-info btn-sm"
-                                                            id="save-pelaksana"><i class="fas fa-check-circle"></i>
-                                                            Preview &
-                                                            Confirm</button>
-                                                    </div>
-                                                    <!-- Modal untuk tampil preview tanda tangan-->
-                                                    <div class="modal fade" id="modal-pelaksana" tabindex="-1"
-                                                        role="dialog" aria-labelledby="myModalLabel">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h4 class="modal-title" id="myModalLabel">Preview
-                                                                        Tanda
-                                                                        Tangan</h4>
-                                                                    <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="modal"
-                                                                        aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                @endif
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>

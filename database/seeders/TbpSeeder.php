@@ -15,6 +15,7 @@ class TbpSeeder extends Seeder
     {
         DB::table('tbps')->insert([
             [
+                'table' => 'TB Paru',
                 'noReg' => 'RG03299949',
                 'nama' => 'FAJAR HAQQY ASHBAHANIE',
                 'jenis_kelamin' => 'Laki-laki',
